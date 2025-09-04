@@ -1,0 +1,254 @@
+# Copyright (C) 2024 JUT-SO
+# This file is distributed under the GPL v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: JUT-SO Shipment Tracking 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/jut-so-shipment-tracking\n"
+"POT-Creation-Date: 2024-01-01T00:00:00+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: includes/class-jutso-admin.php:24
+#: includes/class-jutso-admin.php:37
+msgid "Shipment Tracking"
+msgstr ""
+
+#: includes/class-jutso-admin.php:60
+msgid "Carrier"
+msgstr ""
+
+#: includes/class-jutso-admin.php:62
+msgid "Select carrier..."
+msgstr ""
+
+#: includes/class-jutso-admin.php:63
+msgid "UPS"
+msgstr ""
+
+#: includes/class-jutso-admin.php:64
+msgid "FedEx"
+msgstr ""
+
+#: includes/class-jutso-admin.php:65
+msgid "USPS"
+msgstr ""
+
+#: includes/class-jutso-admin.php:66
+msgid "DHL"
+msgstr ""
+
+#: includes/class-jutso-admin.php:67
+msgid "Custom"
+msgstr ""
+
+#: includes/class-jutso-admin.php:72
+msgid "Tracking Number"
+msgstr ""
+
+#: includes/class-jutso-admin.php:78
+msgid "Date Added"
+msgstr ""
+
+#: includes/class-jutso-admin.php:89
+msgid "View Tracking"
+msgstr ""
+
+#: includes/class-jutso-admin.php:119
+#: includes/class-jutso-api.php:137
+msgid "Tracking number added: %s (Carrier: %s)"
+msgstr ""
+
+#: includes/class-jutso-admin.php:121
+#: includes/class-jutso-api.php:139
+msgid "Not specified"
+msgstr ""
+
+#: includes/class-jutso-api.php:68
+#: includes/class-jutso-api.php:95
+#: includes/class-jutso-api.php:162
+msgid "Order not found"
+msgstr ""
+
+#: includes/class-jutso-api.php:146
+msgid "Tracking information updated successfully"
+msgstr ""
+
+#: includes/class-jutso-api.php:175
+msgid "Tracking information removed via API"
+msgstr ""
+
+#: includes/class-jutso-api.php:179
+msgid "Tracking information deleted successfully"
+msgstr ""
+
+#: includes/class-jutso-api.php:189
+msgid "Missing required fields"
+msgstr ""
+
+#: includes/class-jutso-api.php:225
+msgid "%d orders updated, %d errors"
+msgstr ""
+
+#: includes/class-jutso-api.php:235
+msgid "You do not have permission to access this resource"
+msgstr ""
+
+#: includes/class-jutso-emails.php:80
+#: includes/class-jutso-emails.php:87
+msgid "Tracking Number:"
+msgstr ""
+
+#: includes/class-jutso-emails.php:82
+#: includes/class-jutso-emails.php:92
+msgid "Carrier:"
+msgstr ""
+
+#: includes/class-jutso-emails.php:85
+msgid "Track your package:"
+msgstr ""
+
+#: includes/class-jutso-emails.php:100
+msgid "Track Your Package"
+msgstr ""
+
+#: includes/class-jutso-emails.php:133
+msgid "Custom Carrier"
+msgstr ""
+
+#: includes/class-jutso-settings.php:25
+msgid "Shipment Tracking Settings"
+msgstr ""
+
+#: includes/class-jutso-settings.php:26
+msgid "Shipment Tracking"
+msgstr ""
+
+#: includes/class-jutso-settings.php:47
+#: includes/class-jutso-settings.php:165
+#: includes/class-jutso-emails.php:78
+msgid "Track your shipment:"
+msgstr ""
+
+#: includes/class-jutso-settings.php:71
+msgid "General Settings"
+msgstr ""
+
+#: includes/class-jutso-settings.php:78
+msgid "Enable Email Integration"
+msgstr ""
+
+#: includes/class-jutso-settings.php:85
+msgid "Email Text"
+msgstr ""
+
+#: includes/class-jutso-settings.php:92
+msgid "Email Position"
+msgstr ""
+
+#: includes/class-jutso-settings.php:99
+msgid "Custom Tracking URL Template"
+msgstr ""
+
+#: includes/class-jutso-settings.php:113
+msgid "Save Settings"
+msgstr ""
+
+#: includes/class-jutso-settings.php:118
+msgid "API Information"
+msgstr ""
+
+#: includes/class-jutso-settings.php:119
+msgid "REST API Endpoints:"
+msgstr ""
+
+#: includes/class-jutso-settings.php:123
+msgid "Retrieve tracking information for an order"
+msgstr ""
+
+#: includes/class-jutso-settings.php:127
+msgid "Add or update tracking information"
+msgstr ""
+
+#: includes/class-jutso-settings.php:128
+msgid "Required:"
+msgstr ""
+
+#: includes/class-jutso-settings.php:129
+msgid "Optional:"
+msgstr ""
+
+#: includes/class-jutso-settings.php:133
+msgid "Remove tracking information"
+msgstr ""
+
+#: includes/class-jutso-settings.php:137
+msgid "Batch update tracking for multiple orders"
+msgstr ""
+
+#: includes/class-jutso-settings.php:140
+msgid "Authentication: Requires manage_woocommerce capability"
+msgstr ""
+
+#: includes/class-jutso-settings.php:145
+msgid "Tracking URL Variables"
+msgstr ""
+
+#: includes/class-jutso-settings.php:146
+msgid "You can use the following variables in your custom tracking URL:"
+msgstr ""
+
+#: includes/class-jutso-settings.php:148
+msgid "The tracking number"
+msgstr ""
+
+#: includes/class-jutso-settings.php:150
+msgid "Example:"
+msgstr ""
+
+#: includes/class-jutso-settings.php:157
+msgid "Configure the shipment tracking settings below."
+msgstr ""
+
+#: includes/class-jutso-settings.php:164
+msgid "Add tracking information to order confirmation emails"
+msgstr ""
+
+#: includes/class-jutso-settings.php:171
+msgid "Text displayed before the tracking link in emails"
+msgstr ""
+
+#: includes/class-jutso-settings.php:178
+msgid "After order table"
+msgstr ""
+
+#: includes/class-jutso-settings.php:179
+msgid "Before order table"
+msgstr ""
+
+#: includes/class-jutso-settings.php:180
+msgid "After customer details"
+msgstr ""
+
+#: includes/class-jutso-settings.php:182
+msgid "Where to display tracking information in the email"
+msgstr ""
+
+#: includes/class-jutso-settings.php:191
+msgid "Custom tracking URL template. Use {tracking_number} as placeholder."
+msgstr ""
+
+#: includes/class-jutso-settings.php:192
+msgid "Leave empty to use default carrier URLs based on selected carrier."
+msgstr ""
+
+#: includes/class-jutso-settings.php:208
+msgid "Settings"
+msgstr ""
+
+#: jut-so-shipment-tracking.php:108
+msgid "JUT-SO Shipment Tracking requires WooCommerce to be installed and activated."
+msgstr ""

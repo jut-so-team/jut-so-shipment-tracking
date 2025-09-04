@@ -1,0 +1,41 @@
+.jutso-tracking-fields .form-field {
+	margin: 8px 0;
+	padding: 0;
+}
+
+.jutso-tracking-fields .form-field label {
+	display: block;
+	margin-bottom: 4px;
+	font-weight: 600;
+	font-size: 12px;
+}
+
+.jutso-tracking-fields .form-field input[type="text"],
+.jutso-tracking-fields .form-field select {
+	width: 100%;
+	max-width: 100%;
+}
+
+.jutso-tracking-fields .button {
+	margin-top: 8px;
+}
+
+.jutso-st-info ul {
+	margin-top: 10px;
+}
+
+.jutso-st-info ul li {
+	margin-bottom: 12px;
+	line-height: 1.6;
+}
+
+.jutso-st-info code {
+	background: #fff;
+	padding: 2px 6px;
+	border-radius: 3px;
+	font-size: 12px;
+}
+
+.jutso-st-shortcuts {
+	margin-top: 20px;
+}

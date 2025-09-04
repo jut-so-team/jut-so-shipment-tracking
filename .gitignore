@@ -1,0 +1,43 @@
+# IDE and OS files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Dependency directories
+node_modules/
+vendor/
+
+# Build files
+*.zip
+*.tar.gz
+
+# WordPress specific
+wp-config.php
+*.log
+
+# Environment files
+.env
+.env.local
+
+# Development files
+.phpunit.result.cache
+.php_cs.cache
+.php-cs-fixer.cache
+
+# Compiled files
+*.min.js
+*.min.css
+*.map
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Local development
+*.local
+.wordpress-org/
