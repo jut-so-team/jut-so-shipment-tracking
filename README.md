@@ -121,7 +121,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Support
 
-For issues or feature requests, please use the [GitHub Issues](https://github.com/yourusername/jut-so-shipment-tracking/issues) page.
+For issues or feature requests, please use the [GitHub Issues](https://github.com/jut-so-team/jut-so-shipment-tracking/issues) page.
 
 ## Author
 
