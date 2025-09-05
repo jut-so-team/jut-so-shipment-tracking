@@ -166,6 +166,9 @@ class JUTSO_API {
 			)
 		);
 
+		// Get tracking URLs for response
+		$tracking_urls = $this->get_tracking_urls( $order );
+		
 		return rest_ensure_response( array(
 			'success' => true,
 			'message' => __( 'Tracking information updated successfully', 'jut-so-shipment-tracking' ),
@@ -173,7 +176,8 @@ class JUTSO_API {
 				'order_id'        => $order_id,
 				'tracking_number' => $tracking_number,
 				'carrier'         => $carrier,
-				'tracking_url'    => $this->get_tracking_url( $order ),
+				'tracking_url'    => count( $tracking_urls ) === 1 ? reset( $tracking_urls ) : '', // Backward compatibility
+				'tracking_urls'   => $tracking_urls, // New field for multiple URLs
 			),
 		) );
 	}
