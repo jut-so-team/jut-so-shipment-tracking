@@ -157,7 +157,7 @@ class JUTSO_Settings {
 					<li>
 						<strong>GET</strong> <code>/wp-json/jutso-tracking/v1/orders/{order_id}/tracking</code><br>
 						<em><?php esc_html_e( 'Retrieve tracking information for an order', 'jut-so-shipment-tracking' ); ?></em><br>
-						<?php esc_html_e( 'Returns tracking_urls object for multiple tracking numbers', 'jut-so-shipment-tracking' ); ?>
+						<?php esc_html_e( 'Returns tracking_urls object with tracking numbers as keys and URLs as values', 'jut-so-shipment-tracking' ); ?>
 					</li>
 					<li>
 						<strong>POST</strong> <code>/wp-json/jutso-tracking/v1/orders/{order_id}/tracking</code><br>

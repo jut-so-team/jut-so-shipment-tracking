@@ -56,8 +56,7 @@ GET /wp-json/jutso-tracking/v1/orders/{order_id}/tracking
     "tracking_number": "ABC123, DEF456",  // Comma-separated for multiple
     "carrier": "fedex",
     "date_added": "2024-01-20 10:30:00",
-    "tracking_url": "...",  // Single URL (backward compatibility)
-    "tracking_urls": {      // Multiple URLs when applicable
+    "tracking_urls": {      // Object with tracking number as key and URL as value
         "ABC123": "https://track.fedex.com/...",
         "DEF456": "https://track.fedex.com/..."
     }
@@ -82,8 +81,7 @@ POST /wp-json/jutso-tracking/v1/orders/{order_id}/tracking
         "order_id": 123,
         "tracking_number": "ABC123, DEF456",
         "carrier": "fedex",
-        "tracking_url": "...",  // Single URL (backward compatibility)
-        "tracking_urls": {      // Multiple URLs when applicable
+        "tracking_urls": {      // Object with tracking number as key and URL as value
             "ABC123": "https://track.fedex.com/...",
             "DEF456": "https://track.fedex.com/..."
         }

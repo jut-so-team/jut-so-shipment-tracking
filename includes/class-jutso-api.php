@@ -102,8 +102,7 @@ class JUTSO_API {
 			'tracking_number' => $tracking_number,
 			'carrier'         => $tracking_carrier,
 			'date_added'      => $order->get_meta( '_jutso_tracking_date' ),
-			'tracking_url'    => count( $tracking_urls ) === 1 ? reset( $tracking_urls ) : '', // Backward compatibility
-			'tracking_urls'   => $tracking_urls, // New field for multiple URLs
+			'tracking_urls'   => $tracking_urls,
 		);
 
 		return rest_ensure_response( $tracking_data );
@@ -176,8 +175,7 @@ class JUTSO_API {
 				'order_id'        => $order_id,
 				'tracking_number' => $tracking_number,
 				'carrier'         => $carrier,
-				'tracking_url'    => count( $tracking_urls ) === 1 ? reset( $tracking_urls ) : '', // Backward compatibility
-				'tracking_urls'   => $tracking_urls, // New field for multiple URLs
+				'tracking_urls'   => $tracking_urls,
 			),
 		) );
 	}
