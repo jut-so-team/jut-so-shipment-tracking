@@ -1,9 +1,9 @@
-# JUT-SO Shipment Tracking for WooCommerce
+# jut-so Shipment Tracking for WooCommerce
 
 [![WordPress](https://img.shields.io/badge/WordPress-5.8%2B-blue)](https://wordpress.org/)
 [![WooCommerce](https://img.shields.io/badge/WooCommerce-5.0%2B-purple)](https://woocommerce.com/)
 [![PHP](https://img.shields.io/badge/PHP-7.4%2B-777BB4)](https://php.net/)
-[![License](https://img.shields.io/badge/License-Proprietary-red)](https://jut-so.de/license)
+[![License](https://img.shields.io/badge/License-Proprietary-red)]()
 
 A minimalist and professional WordPress plugin that adds shipment tracking functionality to WooCommerce orders with full HPOS compatibility.
 
@@ -174,6 +174,6 @@ Website: [https://jut-so.de](https://jut-so.de)
 
 This plugin is proprietary software. All rights reserved.
 
-© 2024 JUT-SO Team. Unauthorized copying, modification, distribution, or use of this software is strictly prohibited without express written permission from JUT-SO Team.
+© 2024 jut-so Team. Unauthorized copying, modification, distribution, or use of this software is strictly prohibited without express written permission from jut-so Team.
 
-For licensing inquiries, please visit [https://jut-so.de/license](https://jut-so.de/license) or contact support@jut-so.de.
+For licensing inquiries, please contact info@jut-so.de.

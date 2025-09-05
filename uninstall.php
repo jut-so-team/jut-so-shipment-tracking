@@ -1,6 +1,6 @@
 <?php
 /**
- * Uninstall script for JUT-SO Shipment Tracking
+ * Uninstall script for jut-so Shipment Tracking
  *
  * This file is executed when the plugin is deleted.
  * It removes all plugin data from the database.

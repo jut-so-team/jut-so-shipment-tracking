@@ -1,8 +1,8 @@
-# Copyright (C) 2024 JUT-SO
-# This file is distributed under the GPL v2 or later.
+# Copyright (C) 2024 jut-so
+# This file is distributed under the Proprietary License.
 msgid ""
 msgstr ""
-"Project-Id-Version: JUT-SO Shipment Tracking 1.0.0\n"
+"Project-Id-Version: jut-so Shipment Tracking 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/jut-so-shipment-tracking\n"
 "POT-Creation-Date: 2024-01-01T00:00:00+00:00\n"
 "MIME-Version: 1.0\n"
@@ -250,5 +250,5 @@ msgid "Settings"
 msgstr ""
 
 #: jut-so-shipment-tracking.php:108
-msgid "JUT-SO Shipment Tracking requires WooCommerce to be installed and activated."
+msgid "jut-so Shipment Tracking requires WooCommerce to be installed and activated."
 msgstr ""

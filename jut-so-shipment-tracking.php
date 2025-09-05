@@ -7,7 +7,6 @@
  * Author: Christopher Carus
  * Author URI: https://jut-so.de
  * License: Proprietary
- * License URI: https://jut-so.de/license
  * Text Domain: jut-so-shipment-tracking
  * Domain Path: /languages
  * Requires at least: 5.8
@@ -129,7 +128,7 @@ class JUT_SO_Shipment_Tracking {
 	public function woocommerce_missing_notice() {
 		?>
 		<div class="notice notice-error">
-			<p><?php esc_html_e( 'JUT-SO Shipment Tracking requires WooCommerce to be installed and activated.', 'jut-so-shipment-tracking' ); ?></p>
+			<p><?php esc_html_e( 'jut-so Shipment Tracking requires WooCommerce to be installed and activated.', 'jut-so-shipment-tracking' ); ?></p>
 		</div>
 		<?php
 	}

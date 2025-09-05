@@ -1,4 +1,4 @@
-# JUT-SO Shipment Tracking Plugin Development Guidelines
+# jut-so Shipment Tracking Plugin Development Guidelines
 
 ## Code Standards
 

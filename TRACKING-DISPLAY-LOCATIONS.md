@@ -1,6 +1,6 @@
 # Tracking Display Locations
 
-This document lists all locations where tracking information is displayed in the JUT-SO Shipment Tracking plugin and confirms that multiple tracking numbers are properly handled.
+This document lists all locations where tracking information is displayed in the jut-so Shipment Tracking plugin and confirms that multiple tracking numbers are properly handled.
 
 ## Display Locations
 
