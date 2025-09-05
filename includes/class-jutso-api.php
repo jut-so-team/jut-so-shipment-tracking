@@ -91,12 +91,19 @@ class JUTSO_API {
 			return new WP_Error( 'order_not_found', __( 'Order not found', 'jut-so-shipment-tracking' ), array( 'status' => 404 ) );
 		}
 
+		$tracking_number = $order->get_meta( '_jutso_tracking_number' );
+		$tracking_carrier = $order->get_meta( '_jutso_tracking_carrier' );
+		
+		// Handle multiple tracking numbers
+		$tracking_urls = $this->get_tracking_urls( $order );
+		
 		$tracking_data = array(
 			'order_id'        => $order_id,
-			'tracking_number' => $order->get_meta( '_jutso_tracking_number' ),
-			'carrier'         => $order->get_meta( '_jutso_tracking_carrier' ),
+			'tracking_number' => $tracking_number,
+			'carrier'         => $tracking_carrier,
 			'date_added'      => $order->get_meta( '_jutso_tracking_date' ),
-			'tracking_url'    => $this->get_tracking_url( $order ),
+			'tracking_url'    => count( $tracking_urls ) === 1 ? reset( $tracking_urls ) : '', // Backward compatibility
+			'tracking_urls'   => $tracking_urls, // New field for multiple URLs
 		);
 
 		return rest_ensure_response( $tracking_data );
@@ -116,6 +123,13 @@ class JUTSO_API {
 		// Use default carrier if none specified
 		if ( empty( $carrier ) ) {
 			$carrier = get_option( 'jutso_st_default_carrier', '' );
+		}
+
+		// Clean up tracking numbers - remove spaces around commas
+		if ( $tracking_number ) {
+			$tracking_numbers_array = array_map( 'trim', explode( ',', $tracking_number ) );
+			$tracking_numbers_array = array_filter( $tracking_numbers_array ); // Remove empty values
+			$tracking_number = implode( ', ', $tracking_numbers_array );
 		}
 
 		// Validate carrier exists in configured carriers
@@ -138,9 +152,15 @@ class JUTSO_API {
 
 		$carrier_name = ! empty( $carrier ) && isset( $carriers[ $carrier ] ) ? $carriers[ $carrier ]['name'] : __( 'Not specified', 'jut-so-shipment-tracking' );
 
+		// Update note text for multiple tracking numbers
+		$tracking_count = isset( $tracking_numbers_array ) ? count( $tracking_numbers_array ) : 1;
+		$note_text = $tracking_count > 1 
+			? __( 'Tracking numbers added via API: %s (Carrier: %s)', 'jut-so-shipment-tracking' )
+			: __( 'Tracking number added via API: %s (Carrier: %s)', 'jut-so-shipment-tracking' );
+
 		$order->add_order_note(
 			sprintf(
-				__( 'Tracking number added via API: %s (Carrier: %s)', 'jut-so-shipment-tracking' ),
+				$note_text,
 				$tracking_number,
 				$carrier_name
 			)
@@ -302,5 +322,30 @@ class JUTSO_API {
 		}
 
 		return '';
+	}
+
+	private function get_tracking_urls( $order ) {
+		$tracking_number = $order->get_meta( '_jutso_tracking_number' );
+		$carrier = $order->get_meta( '_jutso_tracking_carrier' );
+		
+		if ( ! $tracking_number ) {
+			return array();
+		}
+
+		$carriers = $this->get_carriers();
+		$tracking_urls = array();
+		
+		// Handle multiple tracking numbers
+		$tracking_numbers = array_map( 'trim', explode( ',', $tracking_number ) );
+		
+		foreach ( $tracking_numbers as $single_tracking_number ) {
+			if ( ! empty( $single_tracking_number ) && isset( $carriers[ $carrier ] ) && ! empty( $carriers[ $carrier ]['url'] ) ) {
+				$url_template = $carriers[ $carrier ]['url'];
+				$url = str_replace( '{tracking_number}', $single_tracking_number, $url_template );
+				$tracking_urls[ $single_tracking_number ] = $url;
+			}
+		}
+
+		return $tracking_urls;
 	}
 }

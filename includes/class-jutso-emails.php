@@ -72,41 +72,84 @@ class JUTSO_Emails {
 			return;
 		}
 
-		$tracking_url = $this->get_tracking_url( $tracking_number, $tracking_carrier );
+		// Handle multiple tracking numbers
+		$tracking_numbers = array_map( 'trim', explode( ',', $tracking_number ) );
 		$email_text = get_option( 'jutso_st_email_text', __( 'Track your shipment:', 'jut-so-shipment-tracking' ) );
 
 		if ( $plain_text ) {
 			echo "\n\n" . esc_html( $email_text ) . "\n";
-			echo esc_html__( 'Tracking Number:', 'jut-so-shipment-tracking' ) . ' ' . esc_html( $tracking_number ) . "\n";
+			
+			if ( count( $tracking_numbers ) > 1 ) {
+				echo esc_html__( 'Tracking Numbers:', 'jut-so-shipment-tracking' ) . "\n";
+				foreach ( $tracking_numbers as $single_tracking_number ) {
+					if ( ! empty( $single_tracking_number ) ) {
+						echo '  • ' . esc_html( $single_tracking_number );
+						$tracking_url = $this->get_tracking_url( $single_tracking_number, $tracking_carrier );
+						if ( $tracking_url ) {
+							echo ' - ' . esc_url( $tracking_url );
+						}
+						echo "\n";
+					}
+				}
+			} else {
+				echo esc_html__( 'Tracking Number:', 'jut-so-shipment-tracking' ) . ' ' . esc_html( $tracking_number ) . "\n";
+				$tracking_url = $this->get_tracking_url( $tracking_number, $tracking_carrier );
+				if ( $tracking_url ) {
+					echo esc_html__( 'Track your package:', 'jut-so-shipment-tracking' ) . ' ' . esc_url( $tracking_url ) . "\n";
+				}
+			}
+			
 			if ( $tracking_carrier ) {
 				echo esc_html__( 'Carrier:', 'jut-so-shipment-tracking' ) . ' ' . esc_html( $this->get_carrier_name( $tracking_carrier ) ) . "\n";
-			}
-			if ( $tracking_url ) {
-				echo esc_html__( 'Track your package:', 'jut-so-shipment-tracking' ) . ' ' . esc_url( $tracking_url ) . "\n";
 			}
 		} else {
 			?>
 			<div style="margin: 20px 0; padding: 15px; background-color: #f7f7f7; border: 1px solid #e5e5e5; border-radius: 3px;">
 				<h3 style="margin-top: 0; color: #333;"><?php echo esc_html( $email_text ); ?></h3>
-				<p style="margin: 10px 0;">
-					<strong><?php esc_html_e( 'Tracking Number:', 'jut-so-shipment-tracking' ); ?></strong> 
-					<?php echo esc_html( $tracking_number ); ?>
-				</p>
+				
+				<?php if ( count( $tracking_numbers ) > 1 ) : ?>
+					<p style="margin: 10px 0;">
+						<strong><?php esc_html_e( 'Tracking Numbers:', 'jut-so-shipment-tracking' ); ?></strong>
+					</p>
+					<ul style="margin: 10px 0; padding-left: 20px;">
+						<?php foreach ( $tracking_numbers as $single_tracking_number ) : 
+							if ( ! empty( $single_tracking_number ) ) :
+						?>
+							<li style="margin: 5px 0;"><?php echo esc_html( $single_tracking_number ); ?></li>
+						<?php 
+							endif;
+						endforeach; ?>
+					</ul>
+				<?php else : ?>
+					<p style="margin: 10px 0;">
+						<strong><?php esc_html_e( 'Tracking Number:', 'jut-so-shipment-tracking' ); ?></strong> 
+						<?php echo esc_html( $tracking_number ); ?>
+					</p>
+				<?php endif; ?>
+				
 				<?php if ( $tracking_carrier ) : ?>
 					<p style="margin: 10px 0;">
 						<strong><?php esc_html_e( 'Carrier:', 'jut-so-shipment-tracking' ); ?></strong> 
 						<?php echo esc_html( $this->get_carrier_name( $tracking_carrier ) ); ?>
 					</p>
 				<?php endif; ?>
-				<?php if ( $tracking_url ) : ?>
-					<p style="margin: 15px 0 5px;">
+				
+				<p style="margin: 15px 0 5px;">
+					<?php foreach ( $tracking_numbers as $single_tracking_number ) : 
+						if ( ! empty( $single_tracking_number ) ) :
+							$tracking_url = $this->get_tracking_url( $single_tracking_number, $tracking_carrier );
+							if ( $tracking_url ) :
+					?>
 						<a href="<?php echo esc_url( $tracking_url ); ?>" 
 						   target="_blank" 
-						   style="display: inline-block; padding: 10px 20px; background-color: #2271b1; color: #fff; text-decoration: none; border-radius: 3px;">
-							<?php esc_html_e( 'Track Your Package', 'jut-so-shipment-tracking' ); ?>
+						   style="display: inline-block; padding: 8px 16px; background-color: #2271b1; color: #fff; text-decoration: none; border-radius: 3px; margin-right: 10px; margin-bottom: 10px;">
+							<?php echo count( $tracking_numbers ) > 1 ? esc_html( $single_tracking_number ) : esc_html__( 'Track Your Package', 'jut-so-shipment-tracking' ); ?>
 						</a>
-					</p>
-				<?php endif; ?>
+					<?php 
+							endif;
+						endif;
+					endforeach; ?>
+				</p>
 			</div>
 			<?php
 		}

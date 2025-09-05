@@ -72,8 +72,9 @@ class JUTSO_Admin {
 			</p>
 
 			<p class="form-field">
-				<label for="jutso_tracking_number"><?php esc_html_e( 'Tracking Number', 'jut-so-shipment-tracking' ); ?></label>
+				<label for="jutso_tracking_number"><?php esc_html_e( 'Tracking Numbers', 'jut-so-shipment-tracking' ); ?></label>
 				<input type="text" id="jutso_tracking_number" name="jutso_tracking_number" value="<?php echo esc_attr( $tracking_number ); ?>" class="widefat" />
+				<span class="description"><?php esc_html_e( 'Enter one or more tracking numbers separated by commas', 'jut-so-shipment-tracking' ); ?></span>
 			</p>
 
 			<?php if ( $tracking_date ) : ?>
@@ -85,13 +86,35 @@ class JUTSO_Admin {
 
 			<?php if ( $tracking_number ) : ?>
 				<?php
-				$tracking_url = $this->get_tracking_url( $tracking_number, $tracking_carrier );
-				if ( $tracking_url ) :
+				// Handle multiple tracking numbers
+				$tracking_numbers = array_map( 'trim', explode( ',', $tracking_number ) );
+				$has_tracking_urls = false;
+				foreach ( $tracking_numbers as $single_tracking_number ) {
+					if ( ! empty( $single_tracking_number ) ) {
+						$tracking_url = $this->get_tracking_url( $single_tracking_number, $tracking_carrier );
+						if ( $tracking_url ) {
+							$has_tracking_urls = true;
+							break;
+						}
+					}
+				}
+				
+				if ( $has_tracking_urls ) :
 				?>
 					<p class="form-field">
-						<a href="<?php echo esc_url( $tracking_url ); ?>" target="_blank" class="button">
-							<?php esc_html_e( 'View Tracking', 'jut-so-shipment-tracking' ); ?>
-						</a>
+						<label><?php esc_html_e( 'View Tracking', 'jut-so-shipment-tracking' ); ?></label>
+						<?php foreach ( $tracking_numbers as $single_tracking_number ) : 
+							if ( ! empty( $single_tracking_number ) ) :
+								$tracking_url = $this->get_tracking_url( $single_tracking_number, $tracking_carrier );
+								if ( $tracking_url ) :
+						?>
+							<a href="<?php echo esc_url( $tracking_url ); ?>" target="_blank" class="button" style="margin-right: 5px; margin-bottom: 5px;">
+								<?php echo esc_html( $single_tracking_number ); ?>
+							</a>
+						<?php 
+								endif;
+							endif;
+						endforeach; ?>
 					</p>
 				<?php endif; ?>
 			<?php endif; ?>
@@ -116,6 +139,13 @@ class JUTSO_Admin {
 		$tracking_number = isset( $_POST['jutso_tracking_number'] ) ? sanitize_text_field( $_POST['jutso_tracking_number'] ) : '';
 		$tracking_carrier = isset( $_POST['jutso_tracking_carrier'] ) ? sanitize_text_field( $_POST['jutso_tracking_carrier'] ) : '';
 
+		// Clean up tracking numbers - remove spaces around commas
+		if ( $tracking_number ) {
+			$tracking_numbers_array = array_map( 'trim', explode( ',', $tracking_number ) );
+			$tracking_numbers_array = array_filter( $tracking_numbers_array ); // Remove empty values
+			$tracking_number = implode( ', ', $tracking_numbers_array );
+		}
+
 		if ( $tracking_number ) {
 			// Validate carrier exists in configured carriers
 			$carriers = $this->get_carriers();
@@ -130,9 +160,15 @@ class JUTSO_Admin {
 
 			$carrier_name = isset( $carriers[ $tracking_carrier ] ) ? $carriers[ $tracking_carrier ]['name'] : __( 'Not specified', 'jut-so-shipment-tracking' );
 			
+			// Update order note to reflect multiple tracking numbers
+			$tracking_count = count( $tracking_numbers_array );
+			$note_text = $tracking_count > 1 
+				? __( 'Tracking numbers added: %s (Carrier: %s)', 'jut-so-shipment-tracking' )
+				: __( 'Tracking number added: %s (Carrier: %s)', 'jut-so-shipment-tracking' );
+			
 			$order->add_order_note(
 				sprintf(
-					__( 'Tracking number added: %s (Carrier: %s)', 'jut-so-shipment-tracking' ),
+					$note_text,
 					$tracking_number,
 					$carrier_name
 				)
