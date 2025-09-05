@@ -73,7 +73,7 @@ class JUTSO_Emails {
 		}
 
 		// Handle multiple tracking numbers
-		$tracking_numbers = array_map( 'trim', explode( ',', $tracking_number ) );
+		$tracking_numbers = JUTSO_Helpers::parse_tracking_numbers( $tracking_number );
 		$email_text = get_option( 'jutso_st_email_text', __( 'Track your shipment:', 'jut-so-shipment-tracking' ) );
 
 		if ( $plain_text ) {
@@ -84,7 +84,7 @@ class JUTSO_Emails {
 				foreach ( $tracking_numbers as $single_tracking_number ) {
 					if ( ! empty( $single_tracking_number ) ) {
 						echo '  • ' . esc_html( $single_tracking_number );
-						$tracking_url = $this->get_tracking_url( $single_tracking_number, $tracking_carrier );
+						$tracking_url = JUTSO_Helpers::get_tracking_url( $single_tracking_number, $tracking_carrier );
 						if ( $tracking_url ) {
 							echo ' - ' . esc_url( $tracking_url );
 						}
@@ -93,14 +93,14 @@ class JUTSO_Emails {
 				}
 			} else {
 				echo esc_html__( 'Tracking Number:', 'jut-so-shipment-tracking' ) . ' ' . esc_html( $tracking_number ) . "\n";
-				$tracking_url = $this->get_tracking_url( $tracking_number, $tracking_carrier );
+				$tracking_url = JUTSO_Helpers::get_tracking_url( $tracking_number, $tracking_carrier );
 				if ( $tracking_url ) {
 					echo esc_html__( 'Track your package:', 'jut-so-shipment-tracking' ) . ' ' . esc_url( $tracking_url ) . "\n";
 				}
 			}
 			
 			if ( $tracking_carrier ) {
-				echo esc_html__( 'Carrier:', 'jut-so-shipment-tracking' ) . ' ' . esc_html( $this->get_carrier_name( $tracking_carrier ) ) . "\n";
+				echo esc_html__( 'Carrier:', 'jut-so-shipment-tracking' ) . ' ' . esc_html( JUTSO_Helpers::get_carrier_name( $tracking_carrier ) ) . "\n";
 			}
 		} else {
 			?>
@@ -130,14 +130,14 @@ class JUTSO_Emails {
 				<?php if ( $tracking_carrier ) : ?>
 					<p style="margin: 10px 0;">
 						<strong><?php esc_html_e( 'Carrier:', 'jut-so-shipment-tracking' ); ?></strong> 
-						<?php echo esc_html( $this->get_carrier_name( $tracking_carrier ) ); ?>
+						<?php echo esc_html( JUTSO_Helpers::get_carrier_name( $tracking_carrier ) ); ?>
 					</p>
 				<?php endif; ?>
 				
 				<p style="margin: 15px 0 5px;">
 					<?php foreach ( $tracking_numbers as $single_tracking_number ) : 
 						if ( ! empty( $single_tracking_number ) ) :
-							$tracking_url = $this->get_tracking_url( $single_tracking_number, $tracking_carrier );
+							$tracking_url = JUTSO_Helpers::get_tracking_url( $single_tracking_number, $tracking_carrier );
 							if ( $tracking_url ) :
 					?>
 						<a href="<?php echo esc_url( $tracking_url ); ?>" 
@@ -155,25 +155,5 @@ class JUTSO_Emails {
 		}
 	}
 
-	private function get_carriers() {
-		if ( ! class_exists( 'JUTSO_Settings' ) ) {
-			require_once JUTSO_ST_PLUGIN_DIR . 'includes/class-jutso-settings.php';
-		}
-		return JUTSO_Settings::get_instance()->get_carriers();
-	}
-
-	private function get_tracking_url( $tracking_number, $carrier = '' ) {
-		$carriers = $this->get_carriers();
-		
-		if ( isset( $carriers[ $carrier ] ) && ! empty( $carriers[ $carrier ]['url'] ) ) {
-			return str_replace( '{tracking_number}', $tracking_number, $carriers[ $carrier ]['url'] );
-		}
-
-		return '';
-	}
-
-	private function get_carrier_name( $carrier ) {
-		$carriers = $this->get_carriers();
-		return isset( $carriers[ $carrier ] ) ? $carriers[ $carrier ]['name'] : $carrier;
-	}
+	// Helper methods removed - now using JUTSO_Helpers class
 }

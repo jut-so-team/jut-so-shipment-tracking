@@ -54,7 +54,7 @@ class JUTSO_Admin {
 		$tracking_number = $order->get_meta( '_jutso_tracking_number' );
 		$tracking_carrier = $order->get_meta( '_jutso_tracking_carrier' );
 		$tracking_date = $order->get_meta( '_jutso_tracking_date' );
-		$carriers = $this->get_carriers();
+		$carriers = JUTSO_Helpers::get_carriers();
 
 		wp_nonce_field( 'jutso_save_tracking', 'jutso_tracking_nonce' );
 		?>
@@ -87,15 +87,13 @@ class JUTSO_Admin {
 			<?php if ( $tracking_number ) : ?>
 				<?php
 				// Handle multiple tracking numbers
-				$tracking_numbers = array_map( 'trim', explode( ',', $tracking_number ) );
+				$tracking_numbers = JUTSO_Helpers::parse_tracking_numbers( $tracking_number );
 				$has_tracking_urls = false;
 				foreach ( $tracking_numbers as $single_tracking_number ) {
-					if ( ! empty( $single_tracking_number ) ) {
-						$tracking_url = $this->get_tracking_url( $single_tracking_number, $tracking_carrier );
-						if ( $tracking_url ) {
-							$has_tracking_urls = true;
-							break;
-						}
+					$tracking_url = JUTSO_Helpers::get_tracking_url( $single_tracking_number, $tracking_carrier );
+					if ( $tracking_url ) {
+						$has_tracking_urls = true;
+						break;
 					}
 				}
 				
@@ -105,7 +103,7 @@ class JUTSO_Admin {
 						<label><?php esc_html_e( 'View Tracking', 'jut-so-shipment-tracking' ); ?></label>
 						<?php foreach ( $tracking_numbers as $single_tracking_number ) : 
 							if ( ! empty( $single_tracking_number ) ) :
-								$tracking_url = $this->get_tracking_url( $single_tracking_number, $tracking_carrier );
+								$tracking_url = JUTSO_Helpers::get_tracking_url( $single_tracking_number, $tracking_carrier );
 								if ( $tracking_url ) :
 						?>
 							<a href="<?php echo esc_url( $tracking_url ); ?>" target="_blank" class="button" style="margin-right: 5px; margin-bottom: 5px;">
@@ -139,18 +137,16 @@ class JUTSO_Admin {
 		$tracking_number = isset( $_POST['jutso_tracking_number'] ) ? sanitize_text_field( $_POST['jutso_tracking_number'] ) : '';
 		$tracking_carrier = isset( $_POST['jutso_tracking_carrier'] ) ? sanitize_text_field( $_POST['jutso_tracking_carrier'] ) : '';
 
-		// Clean up tracking numbers - remove spaces around commas
+		// Clean up tracking numbers
 		if ( $tracking_number ) {
-			$tracking_numbers_array = array_map( 'trim', explode( ',', $tracking_number ) );
-			$tracking_numbers_array = array_filter( $tracking_numbers_array ); // Remove empty values
-			$tracking_number = implode( ', ', $tracking_numbers_array );
+			$tracking_number = JUTSO_Helpers::format_tracking_numbers( $tracking_number );
+			$tracking_numbers_array = JUTSO_Helpers::parse_tracking_numbers( $tracking_number );
 		}
 
 		if ( $tracking_number ) {
-			// Validate carrier exists in configured carriers
-			$carriers = $this->get_carriers();
-			if ( ! empty( $tracking_carrier ) && ! isset( $carriers[ $tracking_carrier ] ) ) {
-				// Invalid carrier, don't save
+			// Validate carrier
+			if ( ! JUTSO_Helpers::validate_carrier( $tracking_carrier ) ) {
+				// TODO: Add admin notice for invalid carrier
 				return;
 			}
 
@@ -158,13 +154,14 @@ class JUTSO_Admin {
 			$order->update_meta_data( '_jutso_tracking_carrier', $tracking_carrier );
 			$order->update_meta_data( '_jutso_tracking_date', current_time( 'mysql' ) );
 
-			$carrier_name = isset( $carriers[ $tracking_carrier ] ) ? $carriers[ $tracking_carrier ]['name'] : __( 'Not specified', 'jut-so-shipment-tracking' );
+			$carrier_name = JUTSO_Helpers::get_carrier_name( $tracking_carrier );
+			if ( empty( $carrier_name ) || $carrier_name === $tracking_carrier ) {
+				$carrier_name = __( 'Not specified', 'jut-so-shipment-tracking' );
+			}
 			
-			// Update order note to reflect multiple tracking numbers
+			// Get appropriate note text
 			$tracking_count = count( $tracking_numbers_array );
-			$note_text = $tracking_count > 1 
-				? __( 'Tracking numbers added: %s (Carrier: %s)', 'jut-so-shipment-tracking' )
-				: __( 'Tracking number added: %s (Carrier: %s)', 'jut-so-shipment-tracking' );
+			$note_text = JUTSO_Helpers::get_tracking_note_text( $tracking_count, 'admin' );
 			
 			$order->add_order_note(
 				sprintf(
@@ -195,20 +192,5 @@ class JUTSO_Admin {
 		}
 	}
 
-	private function get_carriers() {
-		if ( ! class_exists( 'JUTSO_Settings' ) ) {
-			require_once JUTSO_ST_PLUGIN_DIR . 'includes/class-jutso-settings.php';
-		}
-		return JUTSO_Settings::get_instance()->get_carriers();
-	}
-
-	private function get_tracking_url( $tracking_number, $carrier = '' ) {
-		$carriers = $this->get_carriers();
-		
-		if ( isset( $carriers[ $carrier ] ) && ! empty( $carriers[ $carrier ]['url'] ) ) {
-			return str_replace( '{tracking_number}', $tracking_number, $carriers[ $carrier ]['url'] );
-		}
-
-		return '';
-	}
+	// Helper methods removed - now using JUTSO_Helpers class
 }

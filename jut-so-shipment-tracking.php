@@ -71,6 +71,7 @@ class JUT_SO_Shipment_Tracking {
 	}
 
 	private function load_dependencies() {
+		require_once JUTSO_ST_PLUGIN_DIR . 'includes/class-jutso-helpers.php';
 		require_once JUTSO_ST_PLUGIN_DIR . 'includes/class-jutso-admin.php';
 		require_once JUTSO_ST_PLUGIN_DIR . 'includes/class-jutso-api.php';
 		require_once JUTSO_ST_PLUGIN_DIR . 'includes/class-jutso-emails.php';

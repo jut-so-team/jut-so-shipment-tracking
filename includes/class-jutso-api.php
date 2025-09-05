@@ -95,7 +95,7 @@ class JUTSO_API {
 		$tracking_carrier = $order->get_meta( '_jutso_tracking_carrier' );
 		
 		// Handle multiple tracking numbers
-		$tracking_urls = $this->get_tracking_urls( $order );
+		$tracking_urls = JUTSO_Helpers::get_tracking_urls( $order );
 		
 		$tracking_data = array(
 			'order_id'        => $order_id,
@@ -124,16 +124,15 @@ class JUTSO_API {
 			$carrier = get_option( 'jutso_st_default_carrier', '' );
 		}
 
-		// Clean up tracking numbers - remove spaces around commas
+		// Clean up tracking numbers
 		if ( $tracking_number ) {
-			$tracking_numbers_array = array_map( 'trim', explode( ',', $tracking_number ) );
-			$tracking_numbers_array = array_filter( $tracking_numbers_array ); // Remove empty values
-			$tracking_number = implode( ', ', $tracking_numbers_array );
+			$tracking_number = JUTSO_Helpers::format_tracking_numbers( $tracking_number );
+			$tracking_numbers_array = JUTSO_Helpers::parse_tracking_numbers( $tracking_number );
 		}
 
-		// Validate carrier exists in configured carriers
-		$carriers = $this->get_carriers();
-		if ( ! empty( $carrier ) && ! isset( $carriers[ $carrier ] ) ) {
+		// Validate carrier
+		if ( ! JUTSO_Helpers::validate_carrier( $carrier ) ) {
+			$carriers = JUTSO_Helpers::get_carriers();
 			return new WP_Error( 
 				'invalid_carrier', 
 				sprintf( __( 'Invalid carrier: %s. Valid carriers are: %s', 'jut-so-shipment-tracking' ), 
@@ -149,13 +148,14 @@ class JUTSO_API {
 		$order->update_meta_data( '_jutso_tracking_date', current_time( 'mysql' ) );
 		$order->save();
 
-		$carrier_name = ! empty( $carrier ) && isset( $carriers[ $carrier ] ) ? $carriers[ $carrier ]['name'] : __( 'Not specified', 'jut-so-shipment-tracking' );
+		$carrier_name = JUTSO_Helpers::get_carrier_name( $carrier );
+		if ( empty( $carrier_name ) || $carrier_name === $carrier ) {
+			$carrier_name = __( 'Not specified', 'jut-so-shipment-tracking' );
+		}
 
-		// Update note text for multiple tracking numbers
+		// Get appropriate note text
 		$tracking_count = isset( $tracking_numbers_array ) ? count( $tracking_numbers_array ) : 1;
-		$note_text = $tracking_count > 1 
-			? __( 'Tracking numbers added via API: %s (Carrier: %s)', 'jut-so-shipment-tracking' )
-			: __( 'Tracking number added via API: %s (Carrier: %s)', 'jut-so-shipment-tracking' );
+		$note_text = JUTSO_Helpers::get_tracking_note_text( $tracking_count, 'api' );
 
 		$order->add_order_note(
 			sprintf(
@@ -166,7 +166,7 @@ class JUTSO_API {
 		);
 
 		// Get tracking URLs for response
-		$tracking_urls = $this->get_tracking_urls( $order );
+		$tracking_urls = JUTSO_Helpers::get_tracking_urls( $order );
 		
 		return rest_ensure_response( array(
 			'success' => true,
@@ -205,7 +205,7 @@ class JUTSO_API {
 		$orders = $request->get_param( 'orders' );
 		$results = array();
 		$errors = array();
-		$carriers = $this->get_carriers();
+		$carriers = JUTSO_Helpers::get_carriers();
 
 		foreach ( $orders as $order_data ) {
 			if ( ! isset( $order_data['order_id'] ) || ! isset( $order_data['tracking_number'] ) ) {
@@ -299,55 +299,5 @@ class JUTSO_API {
 		return is_array( $param ) && count( $param ) > 0;
 	}
 
-	private function get_carriers() {
-		if ( ! class_exists( 'JUTSO_Settings' ) ) {
-			require_once JUTSO_ST_PLUGIN_DIR . 'includes/class-jutso-settings.php';
-		}
-		return JUTSO_Settings::get_instance()->get_carriers();
-	}
-
-	private function get_tracking_url( $order ) {
-		$tracking_number = $order->get_meta( '_jutso_tracking_number' );
-		$carrier = $order->get_meta( '_jutso_tracking_carrier' );
-		
-		if ( ! $tracking_number ) {
-			return '';
-		}
-
-		$carriers = $this->get_carriers();
-		
-		if ( isset( $carriers[ $carrier ] ) && ! empty( $carriers[ $carrier ]['url'] ) ) {
-			$url_template = $carriers[ $carrier ]['url'];
-			// Replace {tracking_number} placeholder with actual tracking number
-			$url = str_replace( '{tracking_number}', $tracking_number, $url_template );
-			return $url;
-		}
-
-		return '';
-	}
-
-	private function get_tracking_urls( $order ) {
-		$tracking_number = $order->get_meta( '_jutso_tracking_number' );
-		$carrier = $order->get_meta( '_jutso_tracking_carrier' );
-		
-		if ( ! $tracking_number ) {
-			return array();
-		}
-
-		$carriers = $this->get_carriers();
-		$tracking_urls = array();
-		
-		// Handle multiple tracking numbers
-		$tracking_numbers = array_map( 'trim', explode( ',', $tracking_number ) );
-		
-		foreach ( $tracking_numbers as $single_tracking_number ) {
-			if ( ! empty( $single_tracking_number ) && isset( $carriers[ $carrier ] ) && ! empty( $carriers[ $carrier ]['url'] ) ) {
-				$url_template = $carriers[ $carrier ]['url'];
-				$url = str_replace( '{tracking_number}', $single_tracking_number, $url_template );
-				$tracking_urls[ $single_tracking_number ] = $url;
-			}
-		}
-
-		return $tracking_urls;
-	}
+	// Helper methods removed - now using JUTSO_Helpers class
 }
