@@ -3,7 +3,7 @@
 [![WordPress](https://img.shields.io/badge/WordPress-5.8%2B-blue)](https://wordpress.org/)
 [![WooCommerce](https://img.shields.io/badge/WooCommerce-5.0%2B-purple)](https://woocommerce.com/)
 [![PHP](https://img.shields.io/badge/PHP-7.4%2B-777BB4)](https://php.net/)
-[![License](https://img.shields.io/badge/License-GPL%20v2-green)](https://www.gnu.org/licenses/gpl-2.0.html)
+[![License](https://img.shields.io/badge/License-Proprietary-red)](https://jut-so.de/license)
 
 A minimalist and professional WordPress plugin that adds shipment tracking functionality to WooCommerce orders with full HPOS compatibility.
 
@@ -172,4 +172,8 @@ Website: [https://jut-so.de](https://jut-so.de)
 
 ## License
 
-GPL v2 or later
+This plugin is proprietary software. All rights reserved.
+
+© 2024 JUT-SO Team. Unauthorized copying, modification, distribution, or use of this software is strictly prohibited without express written permission from JUT-SO Team.
+
+For licensing inquiries, please visit [https://jut-so.de/license](https://jut-so.de/license) or contact support@jut-so.de.

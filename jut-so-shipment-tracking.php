@@ -6,7 +6,8 @@
  * Version: 1.0.0
  * Author: Christopher Carus
  * Author URI: https://jut-so.de
- * License: GPL v2 or later
+ * License: Proprietary
+ * License URI: https://jut-so.de/license
  * Text Domain: jut-so-shipment-tracking
  * Domain Path: /languages
  * Requires at least: 5.8
