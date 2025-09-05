@@ -156,13 +156,14 @@ class JUTSO_Settings {
 				<ul style="list-style: disc; margin-left: 20px;">
 					<li>
 						<strong>GET</strong> <code>/wp-json/jutso-tracking/v1/orders/{order_id}/tracking</code><br>
-						<em><?php esc_html_e( 'Retrieve tracking information for an order', 'jut-so-shipment-tracking' ); ?></em>
+						<em><?php esc_html_e( 'Retrieve tracking information for an order', 'jut-so-shipment-tracking' ); ?></em><br>
+						<?php esc_html_e( 'Returns tracking_urls object for multiple tracking numbers', 'jut-so-shipment-tracking' ); ?>
 					</li>
 					<li>
 						<strong>POST</strong> <code>/wp-json/jutso-tracking/v1/orders/{order_id}/tracking</code><br>
 						<em><?php esc_html_e( 'Add or update tracking information', 'jut-so-shipment-tracking' ); ?></em><br>
-						<?php esc_html_e( 'Required:', 'jut-so-shipment-tracking' ); ?> tracking_number<br>
-						<?php esc_html_e( 'Optional:', 'jut-so-shipment-tracking' ); ?> carrier
+						<?php esc_html_e( 'Required:', 'jut-so-shipment-tracking' ); ?> tracking_number <?php esc_html_e( '(supports comma-separated values)', 'jut-so-shipment-tracking' ); ?><br>
+						<?php esc_html_e( 'Optional:', 'jut-so-shipment-tracking' ); ?> carrier <?php esc_html_e( '(uses default if not specified)', 'jut-so-shipment-tracking' ); ?>
 					</li>
 					<li>
 						<strong>DELETE</strong> <code>/wp-json/jutso-tracking/v1/orders/{order_id}/tracking</code><br>
@@ -170,10 +171,14 @@ class JUTSO_Settings {
 					</li>
 					<li>
 						<strong>POST</strong> <code>/wp-json/jutso-tracking/v1/orders/batch</code><br>
-						<em><?php esc_html_e( 'Batch update tracking for multiple orders', 'jut-so-shipment-tracking' ); ?></em>
+						<em><?php esc_html_e( 'Batch update tracking for multiple orders', 'jut-so-shipment-tracking' ); ?></em><br>
+						<?php esc_html_e( 'Supports multiple tracking numbers per order', 'jut-so-shipment-tracking' ); ?>
 					</li>
 				</ul>
 				<p><?php esc_html_e( 'Authentication: Requires manage_woocommerce capability', 'jut-so-shipment-tracking' ); ?></p>
+				<p style="margin-top: 15px;"><strong><?php esc_html_e( 'Multiple Tracking Numbers:', 'jut-so-shipment-tracking' ); ?></strong><br>
+				<?php esc_html_e( 'You can add multiple tracking numbers by separating them with commas. Example: ABC123, DEF456, GHI789', 'jut-so-shipment-tracking' ); ?><br>
+				<?php esc_html_e( 'All tracking numbers will use the same carrier. Each number gets its own tracking link.', 'jut-so-shipment-tracking' ); ?></p>
 			</div>
 
 			<div class="jutso-st-shortcuts" style="margin-top: 20px; padding: 20px; background: #f8f9fa; border-left: 4px solid #2271b1;">

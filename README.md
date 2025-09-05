@@ -10,6 +10,7 @@ A minimalist and professional WordPress plugin that adds shipment tracking funct
 ## Features
 
 ✓ **Order Meta Box** - Add tracking codes directly from the order edit page  
+✓ **Multiple Tracking Numbers** - Support for multiple tracking numbers per order (comma-separated)  
 ✓ **REST API Support** - Full API endpoints for tracking management  
 ✓ **Email Integration** - Automatically include tracking info in order confirmation emails  
 ✓ **Dynamic Carrier Management** - Add, edit, and remove carriers via settings  
@@ -48,12 +49,45 @@ https://track.example.com/?tracking={tracking_number}
 GET /wp-json/jutso-tracking/v1/orders/{order_id}/tracking
 ```
 
+**Response:**
+```json
+{
+    "order_id": 123,
+    "tracking_number": "ABC123, DEF456",  // Comma-separated for multiple
+    "carrier": "fedex",
+    "date_added": "2024-01-20 10:30:00",
+    "tracking_url": "...",  // Single URL (backward compatibility)
+    "tracking_urls": {      // Multiple URLs when applicable
+        "ABC123": "https://track.fedex.com/...",
+        "DEF456": "https://track.fedex.com/..."
+    }
+}
+```
+
 ### Add/Update Tracking
 ```
 POST /wp-json/jutso-tracking/v1/orders/{order_id}/tracking
 {
-    "tracking_number": "123456789",
-    "carrier": "ups"  // optional
+    "tracking_number": "ABC123, DEF456",  // Single or comma-separated
+    "carrier": "fedex"  // optional, uses default if not specified
+}
+```
+
+**Response:**
+```json
+{
+    "success": true,
+    "message": "Tracking information updated successfully",
+    "data": {
+        "order_id": 123,
+        "tracking_number": "ABC123, DEF456",
+        "carrier": "fedex",
+        "tracking_url": "...",  // Single URL (backward compatibility)
+        "tracking_urls": {      // Multiple URLs when applicable
+            "ABC123": "https://track.fedex.com/...",
+            "DEF456": "https://track.fedex.com/..."
+        }
+    }
 }
 ```
 
@@ -69,7 +103,7 @@ POST /wp-json/jutso-tracking/v1/orders/batch
     "orders": [
         {
             "order_id": 123,
-            "tracking_number": "ABC123",
+            "tracking_number": "ABC123, DEF456",  // Supports multiple
             "carrier": "fedex"
         },
         {
@@ -80,6 +114,14 @@ POST /wp-json/jutso-tracking/v1/orders/batch
     ]
 }
 ```
+
+## Multiple Tracking Numbers
+
+The plugin supports multiple tracking numbers per order:
+- Enter multiple tracking numbers separated by commas in the admin interface
+- All tracking numbers share the same carrier
+- Each tracking number gets its own tracking button/link in emails and order pages
+- API fully supports multiple tracking numbers in all endpoints
 
 ## Carrier Management
 
