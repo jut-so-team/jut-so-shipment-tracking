@@ -347,11 +347,9 @@ class JUTSO_Settings {
 				// Special handling for URL to preserve {tracking_number} placeholder
 				$url = $carrier['url'];
 				if ( ! empty( $url ) ) {
-					// Temporarily replace placeholder to preserve it
-					$url = str_replace( '{tracking_number}', '{{TRACKING_PLACEHOLDER}}', $url );
-					$url = esc_url_raw( $url );
-					// Restore the placeholder
-					$url = str_replace( '{{TRACKING_PLACEHOLDER}}', '{tracking_number}', $url );
+					// Don't use esc_url_raw as it removes curly braces
+					// Just do basic sanitization while preserving the placeholder
+					$url = sanitize_text_field( $url );
 				}
 				
 				$sanitized[ $sanitized_key ] = array(
