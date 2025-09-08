@@ -328,13 +328,42 @@ class JUTSO_Settings {
 
 		$sanitized = array();
 		foreach ( $carriers as $key => $carrier ) {
-			if ( ! empty( $carrier['key'] ) && ! empty( $carrier['name'] ) ) {
-				$sanitized_key = sanitize_key( $carrier['key'] );
+			// Skip empty entries
+			if ( empty( $carrier['key'] ) && empty( $carrier['name'] ) && empty( $carrier['url'] ) ) {
+				continue;
+			}
+			
+			// Determine the actual key to use
+			// For new carriers (key starts with "new_"), use the value from carrier['key']
+			// For existing carriers, use the array key
+			$carrier_key = ( strpos( $key, 'new_' ) === 0 && ! empty( $carrier['key'] ) ) 
+				? $carrier['key'] 
+				: ( ! empty( $carrier['key'] ) ? $carrier['key'] : $key );
+			
+			// Only require key and name to be non-empty
+			if ( ! empty( $carrier_key ) && ! empty( $carrier['name'] ) ) {
+				$sanitized_key = sanitize_key( $carrier_key );
+				
+				// Special handling for URL to preserve {tracking_number} placeholder
+				$url = $carrier['url'];
+				if ( ! empty( $url ) ) {
+					// Temporarily replace placeholder to preserve it
+					$url = str_replace( '{tracking_number}', '{{TRACKING_PLACEHOLDER}}', $url );
+					$url = esc_url_raw( $url );
+					// Restore the placeholder
+					$url = str_replace( '{{TRACKING_PLACEHOLDER}}', '{tracking_number}', $url );
+				}
+				
 				$sanitized[ $sanitized_key ] = array(
 					'name' => sanitize_text_field( $carrier['name'] ),
-					'url' => esc_url_raw( $carrier['url'] )
+					'url' => $url
 				);
 			}
+		}
+
+		// Clear the carriers cache when settings are updated
+		if ( class_exists( 'JUTSO_Helpers' ) ) {
+			JUTSO_Helpers::clear_carriers_cache();
 		}
 
 		return ! empty( $sanitized ) ? $sanitized : $this->get_default_carriers();
