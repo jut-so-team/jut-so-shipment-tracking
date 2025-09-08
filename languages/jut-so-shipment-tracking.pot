@@ -29,6 +29,10 @@ msgstr ""
 msgid "Carrier"
 msgstr ""
 
+#: includes/class-jutso-emails.php
+msgid "Carrier:"
+msgstr ""
+
 #: includes/class-jutso-admin.php:62
 msgid "Select carrier..."
 msgstr ""

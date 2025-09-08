@@ -34,6 +34,9 @@ msgstr "Sendungsnummern"
 msgid "Carrier"
 msgstr "Versanddienstleister"
 
+msgid "Carrier:"
+msgstr "Versanddienstleister:"
+
 msgid "Select a carrier"
 msgstr "Versanddienstleister auswählen"
 
