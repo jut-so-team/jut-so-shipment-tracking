@@ -17,12 +17,24 @@ msgstr ""
 msgid "Shipment Tracking"
 msgstr ""
 
+#: includes/class-jutso-admin.php
+msgid "Tracking Numbers"
+msgstr ""
+
+#: includes/class-jutso-admin.php
+msgid "Enter one or more tracking numbers separated by commas"
+msgstr ""
+
 #: includes/class-jutso-admin.php:60
 msgid "Carrier"
 msgstr ""
 
 #: includes/class-jutso-admin.php:62
 msgid "Select carrier..."
+msgstr ""
+
+#: includes/class-jutso-admin.php
+msgid "Date Added"
 msgstr ""
 
 #: includes/class-jutso-admin.php:63

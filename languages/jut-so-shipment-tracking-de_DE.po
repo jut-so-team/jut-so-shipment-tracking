@@ -25,11 +25,23 @@ msgstr "Sendungsnummer"
 msgid "Separate multiple tracking numbers with commas"
 msgstr "Mehrere Sendungsnummern mit Kommas trennen"
 
+msgid "Enter one or more tracking numbers separated by commas"
+msgstr "Geben Sie eine oder mehrere Sendungsnummern durch Kommas getrennt ein"
+
+msgid "Tracking Numbers"
+msgstr "Sendungsnummern"
+
 msgid "Carrier"
 msgstr "Versanddienstleister"
 
 msgid "Select a carrier"
 msgstr "Versanddienstleister auswählen"
+
+msgid "Select carrier..."
+msgstr "Versanddienstleister auswählen..."
+
+msgid "Date Added"
+msgstr "Hinzugefügt am"
 
 msgid "— Select —"
 msgstr "— Auswählen —"
