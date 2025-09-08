@@ -1,0 +1,28 @@
+<wpml-config>
+    <admin-texts>
+        <!-- Email Settings -->
+        <key name="jutso_st_email_text">
+            <key name="*" />
+        </key>
+        
+        <!-- Carrier Names -->
+        <key name="jutso_st_carriers">
+            <key name="*">
+                <key name="name" />
+            </key>
+        </key>
+    </admin-texts>
+    
+    <custom-fields>
+        <!-- Order Meta Fields -->
+        <field action="ignore">_jutso_tracking_number</field>
+        <field action="ignore">_jutso_tracking_carrier</field>
+        <field action="ignore">_jutso_tracking_date</field>
+    </custom-fields>
+    
+    <language-switcher-settings>
+        <key name="jutso_st_enable_email" />
+        <key name="jutso_st_email_position" />
+        <key name="jutso_st_default_carrier" />
+    </language-switcher-settings>
+</wpml-config>

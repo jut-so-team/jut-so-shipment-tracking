@@ -1,0 +1,261 @@
+# German translation for jut-so Shipment Tracking
+# Copyright (C) 2024 jut-so
+# This file is distributed under the Proprietary License.
+msgid ""
+msgstr ""
+"Project-Id-Version: jut-so Shipment Tracking 1.3.0\n"
+"Report-Msgid-Bugs-To: https://github.com/jut-so-team/jut-so-shipment-tracking/issues\n"
+"POT-Creation-Date: 2024-01-09T12:00:00+00:00\n"
+"PO-Revision-Date: 2024-01-09T13:00:00+00:00\n"
+"Last-Translator: jut-so Team\n"
+"Language-Team: German\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: includes/class-jutso-admin.php
+msgid "Shipment Tracking"
+msgstr "Sendungsverfolgung"
+
+msgid "Tracking Number"
+msgstr "Sendungsnummer"
+
+msgid "Separate multiple tracking numbers with commas"
+msgstr "Mehrere Sendungsnummern mit Kommas trennen"
+
+msgid "Carrier"
+msgstr "Versanddienstleister"
+
+msgid "Select a carrier"
+msgstr "Versanddienstleister auswählen"
+
+msgid "— Select —"
+msgstr "— Auswählen —"
+
+msgid "Date Shipped"
+msgstr "Versanddatum"
+
+msgid "Add Tracking"
+msgstr "Sendungsverfolgung hinzufügen"
+
+msgid "Remove Tracking"
+msgstr "Sendungsverfolgung entfernen"
+
+msgid "Tracking number added: %s (Carrier: %s)"
+msgstr "Sendungsnummer hinzugefügt: %s (Versanddienstleister: %s)"
+
+msgid "Tracking numbers added: %s (Carrier: %s)"
+msgstr "Sendungsnummern hinzugefügt: %s (Versanddienstleister: %s)"
+
+msgid "Not specified"
+msgstr "Nicht angegeben"
+
+msgid "Tracking information removed"
+msgstr "Sendungsverfolgungsinformationen entfernt"
+
+msgid "View Tracking"
+msgstr "Sendungsverfolgung anzeigen"
+
+#: includes/class-jutso-settings.php
+msgid "Shipment Tracking Settings"
+msgstr "Sendungsverfolgung Einstellungen"
+
+msgid "General Settings"
+msgstr "Allgemeine Einstellungen"
+
+msgid "Configure the shipment tracking settings below."
+msgstr "Konfigurieren Sie die Sendungsverfolgungseinstellungen unten."
+
+msgid "Enable Email Integration"
+msgstr "E-Mail-Integration aktivieren"
+
+msgid "Add tracking information to order confirmation emails"
+msgstr "Sendungsverfolgungsinformationen zu Bestellbestätigungs-E-Mails hinzufügen"
+
+msgid "Email Text"
+msgstr "E-Mail-Text"
+
+msgid "Text displayed before the tracking link in emails"
+msgstr "Text, der vor dem Tracking-Link in E-Mails angezeigt wird"
+
+msgid "Track your shipment:"
+msgstr "Verfolgen Sie Ihre Sendung:"
+
+msgid "Email Position"
+msgstr "E-Mail-Position"
+
+msgid "Where to display tracking information in the email"
+msgstr "Wo die Sendungsverfolgungsinformationen in der E-Mail angezeigt werden sollen"
+
+msgid "After order table"
+msgstr "Nach der Bestelltabelle"
+
+msgid "Before order table"
+msgstr "Vor der Bestelltabelle"
+
+msgid "After customer details"
+msgstr "Nach den Kundendaten"
+
+msgid "Carrier Settings"
+msgstr "Versanddienstleister-Einstellungen"
+
+msgid "Configure shipping carriers and their tracking URL templates."
+msgstr "Konfigurieren Sie Versanddienstleister und ihre Tracking-URL-Vorlagen."
+
+msgid "Default Carrier"
+msgstr "Standard-Versanddienstleister"
+
+msgid "Default carrier to use when none is specified (e.g., via API)."
+msgstr "Standard-Versanddienstleister, wenn keiner angegeben ist (z.B. über API)."
+
+msgid "— No default —"
+msgstr "— Kein Standard —"
+
+msgid "Shipping Carriers"
+msgstr "Versanddienstleister"
+
+msgid "Carrier Key"
+msgstr "Versanddienstleister-Schlüssel"
+
+msgid "Carrier Name"
+msgstr "Versanddienstleister-Name"
+
+msgid "Tracking URL Template"
+msgstr "Tracking-URL-Vorlage"
+
+msgid "Actions"
+msgstr "Aktionen"
+
+msgid "Remove"
+msgstr "Entfernen"
+
+msgid "Add Carrier"
+msgstr "Versanddienstleister hinzufügen"
+
+msgid "Use {tracking_number} as a placeholder in the tracking URL template."
+msgstr "Verwenden Sie {tracking_number} als Platzhalter in der Tracking-URL-Vorlage."
+
+msgid "Example: https://track.example.com/?tracking={tracking_number}"
+msgstr "Beispiel: https://track.example.com/?tracking={tracking_number}"
+
+msgid "Save Settings"
+msgstr "Einstellungen speichern"
+
+msgid "Settings"
+msgstr "Einstellungen"
+
+msgid "API Information"
+msgstr "API-Informationen"
+
+msgid "REST API Endpoints:"
+msgstr "REST-API-Endpunkte:"
+
+msgid "Retrieve tracking information for an order"
+msgstr "Sendungsverfolgungsinformationen für eine Bestellung abrufen"
+
+msgid "Returns tracking_urls object with tracking numbers as keys and URLs as values"
+msgstr "Gibt ein tracking_urls-Objekt mit Sendungsnummern als Schlüssel und URLs als Werte zurück"
+
+msgid "Add or update tracking information"
+msgstr "Sendungsverfolgungsinformationen hinzufügen oder aktualisieren"
+
+msgid "Required:"
+msgstr "Erforderlich:"
+
+msgid "(supports comma-separated values)"
+msgstr "(unterstützt kommagetrennte Werte)"
+
+msgid "Optional:"
+msgstr "Optional:"
+
+msgid "(uses default if not specified)"
+msgstr "(verwendet Standard, wenn nicht angegeben)"
+
+msgid "Remove tracking information"
+msgstr "Sendungsverfolgungsinformationen entfernen"
+
+msgid "Batch update tracking for multiple orders"
+msgstr "Stapelaktualisierung der Sendungsverfolgung für mehrere Bestellungen"
+
+msgid "Supports multiple tracking numbers per order"
+msgstr "Unterstützt mehrere Sendungsnummern pro Bestellung"
+
+msgid "Authentication: Requires manage_woocommerce capability"
+msgstr "Authentifizierung: Erfordert manage_woocommerce-Berechtigung"
+
+msgid "Multiple Tracking Numbers:"
+msgstr "Mehrere Sendungsnummern:"
+
+msgid "You can add multiple tracking numbers by separating them with commas. Example: ABC123, DEF456, GHI789"
+msgstr "Sie können mehrere Sendungsnummern hinzufügen, indem Sie sie mit Kommas trennen. Beispiel: ABC123, DEF456, GHI789"
+
+msgid "All tracking numbers will use the same carrier. Each number gets its own tracking link."
+msgstr "Alle Sendungsnummern verwenden denselben Versanddienstleister. Jede Nummer erhält ihren eigenen Tracking-Link."
+
+msgid "Tracking URL Variables"
+msgstr "Tracking-URL-Variablen"
+
+msgid "You can use the following variables in your custom tracking URL:"
+msgstr "Sie können die folgenden Variablen in Ihrer benutzerdefinierten Tracking-URL verwenden:"
+
+msgid "The tracking number"
+msgstr "Die Sendungsnummer"
+
+msgid "Example:"
+msgstr "Beispiel:"
+
+#: includes/class-jutso-api.php
+msgid "Order not found"
+msgstr "Bestellung nicht gefunden"
+
+msgid "Invalid carrier: %s. Valid carriers are: %s"
+msgstr "Ungültiger Versanddienstleister: %s. Gültige Versanddienstleister sind: %s"
+
+msgid "Tracking information updated successfully"
+msgstr "Sendungsverfolgungsinformationen erfolgreich aktualisiert"
+
+msgid "Tracking information deleted successfully"
+msgstr "Sendungsverfolgungsinformationen erfolgreich gelöscht"
+
+msgid "Missing required fields"
+msgstr "Erforderliche Felder fehlen"
+
+msgid "Tracking number added via API: %s (Carrier: %s)"
+msgstr "Sendungsnummer über API hinzugefügt: %s (Versanddienstleister: %s)"
+
+msgid "Tracking numbers added via API: %s (Carrier: %s)"
+msgstr "Sendungsnummern über API hinzugefügt: %s (Versanddienstleister: %s)"
+
+msgid "Tracking number added via API (batch): %s (Carrier: %s)"
+msgstr "Sendungsnummer über API (Stapel) hinzugefügt: %s (Versanddienstleister: %s)"
+
+msgid "Tracking information removed via API"
+msgstr "Sendungsverfolgungsinformationen über API entfernt"
+
+msgid "%d orders updated, %d errors"
+msgstr "%d Bestellungen aktualisiert, %d Fehler"
+
+msgid "You do not have permission to access this resource"
+msgstr "Sie haben keine Berechtigung, auf diese Ressource zuzugreifen"
+
+#: includes/class-jutso-emails.php
+msgid "Tracking Numbers:"
+msgstr "Sendungsnummern:"
+
+msgid "Tracking Number:"
+msgstr "Sendungsnummer:"
+
+msgid "Track your package:"
+msgstr "Verfolgen Sie Ihr Paket:"
+
+msgid "Track Your Package"
+msgstr "Paket verfolgen"
+
+#: jut-so-shipment-tracking.php
+msgid "jut-so Shipment Tracking requires WooCommerce to be installed and activated."
+msgstr "jut-so Sendungsverfolgung erfordert, dass WooCommerce installiert und aktiviert ist."
+
+msgid "jut-so Shipment Tracking requires WooCommerce %s or greater."
+msgstr "jut-so Sendungsverfolgung erfordert WooCommerce %s oder höher."
