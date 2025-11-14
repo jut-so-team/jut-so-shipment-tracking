@@ -233,8 +233,16 @@ class JUTSO_API {
 				$carrier = get_option( 'jutso_st_default_carrier', '' );
 			}
 
-			// Validate carrier exists in configured carriers
-			if ( ! empty( $carrier ) && ! isset( $carriers[ $carrier ] ) ) {
+			// Clean up tracking numbers (format and parse comma-separated values)
+			$tracking_number = $order_data['tracking_number'];
+			$tracking_numbers_array = array();
+			if ( $tracking_number ) {
+				$tracking_number = JUTSO_Helpers::format_tracking_numbers( $tracking_number );
+				$tracking_numbers_array = JUTSO_Helpers::parse_tracking_numbers( $tracking_number );
+			}
+
+			// Validate carrier using helper function (consistent with single order endpoint)
+			if ( ! JUTSO_Helpers::validate_carrier( $carrier ) ) {
 				$errors[] = array(
 					'order_id' => $order_data['order_id'],
 					'error'    => sprintf( 
@@ -246,24 +254,33 @@ class JUTSO_API {
 				continue;
 			}
 
-			$order->update_meta_data( '_jutso_tracking_number', $order_data['tracking_number'] );
+			$order->update_meta_data( '_jutso_tracking_number', $tracking_number );
 			$order->update_meta_data( '_jutso_tracking_carrier', $carrier );
 			$order->update_meta_data( '_jutso_tracking_date', current_time( 'mysql' ) );
 			$order->save();
 
-			// Add order note
-			$carrier_name = ! empty( $carrier ) && isset( $carriers[ $carrier ] ) ? $carriers[ $carrier ]['name'] : __( 'Not specified', 'jut-so-shipment-tracking' );
+			// Add order note with proper plural/singular handling
+			$carrier_name = JUTSO_Helpers::get_carrier_name( $carrier );
+			if ( empty( $carrier_name ) || $carrier_name === $carrier ) {
+				$carrier_name = __( 'Not specified', 'jut-so-shipment-tracking' );
+			}
+			
+			$tracking_count = count( $tracking_numbers_array );
+			$note_text = $tracking_count > 1 
+				? __( 'Tracking numbers added via API (batch): %s (Carrier: %s)', 'jut-so-shipment-tracking' )
+				: __( 'Tracking number added via API (batch): %s (Carrier: %s)', 'jut-so-shipment-tracking' );
+			
 			$order->add_order_note(
 				sprintf(
-					__( 'Tracking number added via API (batch): %s (Carrier: %s)', 'jut-so-shipment-tracking' ),
-					$order_data['tracking_number'],
+					$note_text,
+					$tracking_number,
 					$carrier_name
 				)
 			);
 
 			$results[] = array(
 				'order_id'        => $order_data['order_id'],
-				'tracking_number' => $order_data['tracking_number'],
+				'tracking_number' => $tracking_number,
 				'carrier'         => $carrier,
 			);
 		}
