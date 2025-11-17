@@ -233,13 +233,30 @@ class JUTSO_API {
 				$carrier = get_option( 'jutso_st_default_carrier', '' );
 			}
 
-			// Clean up tracking numbers (format and parse comma-separated values)
-			$tracking_number = $order_data['tracking_number'];
-			$tracking_numbers_array = array();
-			if ( $tracking_number ) {
-				$tracking_number = JUTSO_Helpers::format_tracking_numbers( $tracking_number );
-				$tracking_numbers_array = JUTSO_Helpers::parse_tracking_numbers( $tracking_number );
+			// Clean up incoming tracking numbers (format and parse comma-separated values)
+			$incoming_tracking_number = $order_data['tracking_number'];
+			$incoming_numbers = array();
+			if ( $incoming_tracking_number ) {
+				$incoming_tracking_number = JUTSO_Helpers::format_tracking_numbers( $incoming_tracking_number );
+				$incoming_numbers = JUTSO_Helpers::parse_tracking_numbers( $incoming_tracking_number );
 			}
+
+			// Merge with any tracking numbers already stored on the order
+			$existing_tracking_number = $order->get_meta( '_jutso_tracking_number' );
+			$existing_numbers = $existing_tracking_number ? JUTSO_Helpers::parse_tracking_numbers( $existing_tracking_number ) : array();
+
+			$merged_numbers = array_unique( array_merge( $existing_numbers, $incoming_numbers ) );
+
+			if ( empty( $merged_numbers ) ) {
+				$errors[] = array(
+					'order_id' => $order_data['order_id'],
+					'error'    => __( 'No valid tracking numbers provided', 'jut-so-shipment-tracking' ),
+				);
+				continue;
+			}
+
+			$tracking_numbers_array = $merged_numbers;
+			$tracking_number = implode( ', ', $tracking_numbers_array );
 
 			// Validate carrier using helper function (consistent with single order endpoint)
 			if ( ! JUTSO_Helpers::validate_carrier( $carrier ) ) {
